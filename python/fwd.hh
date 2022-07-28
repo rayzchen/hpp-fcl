@@ -5,6 +5,17 @@
 #ifndef HPP_FCL_PYTHON_FWD_HH
 #define HPP_FCL_PYTHON_FWD_HH
 
+// Disable register_symbolic_link checks
+
+#ifndef EIGENPY_DISABLED
+#include <eigenpy/eigenpy.hpp>
+#include <eigenpy/eigen-to-python.hpp>
+#define register_symbolic_link(T) eigenpy::register_symbolic_link_to_registered_type< \
+          std::vector<T> >()
+#else
+#define register_symbolic_link(T) true
+#endif
+
 #include <hpp/fcl/fwd.hh>
 #ifdef HPP_FCL_HAS_DOXYGEN_AUTODOC
 namespace doxygen {

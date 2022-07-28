@@ -32,8 +32,10 @@
 //  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef EIGENPY_DISABLED
 #include <eigenpy/eigenpy.hpp>
 #include <eigenpy/geometry.hpp>
+#endif
 
 #include <hpp/fcl/fwd.hh>
 #include <hpp/fcl/math/transform.h>
@@ -63,15 +65,19 @@ struct TriangleWrapper {
 };
 
 void exposeMaths() {
+#ifndef EIGENPY_DISABLED
   eigenpy::enableEigenPy();
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<Eigen::Quaterniond>())
+  if (!register_symbolic_link(Eigen::Quaterniond))
     eigenpy::exposeQuaternion();
-  if (!eigenpy::register_symbolic_link_to_registered_type<Eigen::AngleAxisd>())
+  if (!register_symbolic_link(Eigen::AngleAxisd))
     eigenpy::exposeAngleAxis();
 
   eigenpy::enableEigenPySpecific<Matrix3f>();
   eigenpy::enableEigenPySpecific<Vec3f>();
+#else
+
+#endif
 
   class_<Transform3f>("Transform3f", doxygen::class_doc<Transform3f>(), no_init)
       .def(dv::init<Transform3f>())
@@ -131,13 +137,11 @@ void exposeMaths() {
       .staticmethod("size")
       .def(self == self);
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<Vec3f> >()) {
+  if (!register_symbolic_link(std::vector<Vec3f> )) {
     class_<std::vector<Vec3f> >("StdVec_Vec3f")
         .def(vector_indexing_suite<std::vector<Vec3f> >());
   }
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<Triangle> >()) {
+  if (!register_symbolic_link(std::vector<Triangle> )) {
     class_<std::vector<Triangle> >("StdVec_Triangle")
         .def(vector_indexing_suite<std::vector<Triangle> >());
   }

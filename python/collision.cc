@@ -32,8 +32,6 @@
 //  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 
-#include <eigenpy/eigenpy.hpp>
-
 #include <hpp/fcl/fwd.hh>
 #include <hpp/fcl/collision.h>
 
@@ -60,8 +58,7 @@ const CollisionGeometry* geto(const Contact& c) {
 }
 
 void exposeCollisionAPI() {
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          CollisionRequestFlag>()) {
+  if (!register_symbolic_link(CollisionRequestFlag)) {
     enum_<CollisionRequestFlag>("CollisionRequestFlag")
         .value("CONTACT", CONTACT)
         .value("DISTANCE_LOWER_BOUND", DISTANCE_LOWER_BOUND)
@@ -69,7 +66,7 @@ void exposeCollisionAPI() {
         .export_values();
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<CPUTimes>()) {
+  if (!register_symbolic_link(CPUTimes)) {
     class_<CPUTimes>("CPUTimes", no_init)
         .def_readonly("wall", &CPUTimes::wall,
                       "wall time in micro seconds (us)")
@@ -80,7 +77,7 @@ void exposeCollisionAPI() {
         .def("clear", &CPUTimes::clear, arg("self"), "Reset the time values.");
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<QueryRequest>()) {
+  if (!register_symbolic_link(QueryRequest)) {
     class_<QueryRequest>("QueryRequest", doxygen::class_doc<QueryRequest>(),
                          no_init)
         .DEF_RW_CLASS_ATTRIB(QueryRequest, gjk_tolerance)
@@ -115,7 +112,7 @@ void exposeCollisionAPI() {
         .DEF_CLASS_FUNC(QueryRequest, updateGuess);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<CollisionRequest>()) {
+  if (!register_symbolic_link(CollisionRequest)) {
     class_<CollisionRequest, bases<QueryRequest> >(
         "CollisionRequest", doxygen::class_doc<CollisionRequest>(), no_init)
         .def(dv::init<CollisionRequest>())
@@ -128,13 +125,12 @@ void exposeCollisionAPI() {
         .DEF_RW_CLASS_ATTRIB(CollisionRequest, distance_upper_bound);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<CollisionRequest> >()) {
+  if (!register_symbolic_link(std::vector<CollisionRequest> )) {
     class_<std::vector<CollisionRequest> >("StdVec_CollisionRequest")
         .def(vector_indexing_suite<std::vector<CollisionRequest> >());
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<Contact>()) {
+  if (!register_symbolic_link(Contact)) {
     class_<Contact>("Contact", doxygen::class_doc<Contact>(),
                     init<>(arg("self"), "Default constructor"))
         .def(dv::init<Contact, const CollisionGeometry*,
@@ -161,13 +157,12 @@ void exposeCollisionAPI() {
         .def(self != self);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<Contact> >()) {
+  if (!register_symbolic_link(std::vector<Contact> )) {
     class_<std::vector<Contact> >("StdVec_Contact")
         .def(vector_indexing_suite<std::vector<Contact> >());
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<QueryResult>()) {
+  if (!register_symbolic_link(QueryResult)) {
     class_<QueryResult>("QueryResult", doxygen::class_doc<QueryResult>(),
                         no_init)
         .DEF_RW_CLASS_ATTRIB(QueryResult, cached_gjk_guess)
@@ -175,7 +170,7 @@ void exposeCollisionAPI() {
         .DEF_RW_CLASS_ATTRIB(QueryResult, timings);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<CollisionResult>()) {
+  if (!register_symbolic_link(CollisionResult)) {
     class_<CollisionResult, bases<QueryResult> >(
         "CollisionResult", doxygen::class_doc<CollisionResult>(), no_init)
         .def(dv::init<CollisionResult>())
@@ -200,8 +195,7 @@ void exposeCollisionAPI() {
         .DEF_RW_CLASS_ATTRIB(CollisionResult, distance_lower_bound);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<CollisionResult> >()) {
+  if (!register_symbolic_link(std::vector<CollisionResult> )) {
     class_<std::vector<CollisionResult> >("StdVec_CollisionResult")
         .def(vector_indexing_suite<std::vector<CollisionResult> >());
   }

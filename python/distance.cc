@@ -32,8 +32,6 @@
 //  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 
-#include <eigenpy/eigenpy.hpp>
-
 #include "fcl.hh"
 
 #include <hpp/fcl/fwd.hh>
@@ -59,7 +57,7 @@ struct DistanceRequestWrapper {
 };
 
 void exposeDistanceAPI() {
-  if (!eigenpy::register_symbolic_link_to_registered_type<DistanceRequest>()) {
+  if (!register_symbolic_link(DistanceRequest)) {
     class_<DistanceRequest, bases<QueryRequest> >(
         "DistanceRequest", doxygen::class_doc<DistanceRequest>(),
         init<optional<bool, FCL_REAL, FCL_REAL> >(
@@ -71,13 +69,12 @@ void exposeDistanceAPI() {
         .DEF_RW_CLASS_ATTRIB(DistanceRequest, abs_err);
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<DistanceRequest> >()) {
+  if (!register_symbolic_link(std::vector<DistanceRequest> )) {
     class_<std::vector<DistanceRequest> >("StdVec_DistanceRequest")
         .def(vector_indexing_suite<std::vector<DistanceRequest> >());
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<DistanceResult>()) {
+  if (!register_symbolic_link(DistanceResult)) {
     class_<DistanceResult, bases<QueryResult> >(
         "DistanceResult", doxygen::class_doc<DistanceResult>(), no_init)
         .def(dv::init<DistanceResult>())
@@ -97,8 +94,7 @@ void exposeDistanceAPI() {
              doxygen::member_func_doc(&DistanceResult::clear));
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          std::vector<DistanceResult> >()) {
+  if (!register_symbolic_link(std::vector<DistanceResult> )) {
     class_<std::vector<DistanceResult> >("StdVec_DistanceResult")
         .def(vector_indexing_suite<std::vector<DistanceResult> >());
   }

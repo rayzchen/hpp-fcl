@@ -32,8 +32,6 @@
 //  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 
-#include <eigenpy/eigenpy.hpp>
-
 #include "fcl.hh"
 
 #include <hpp/fcl/fwd.hh>
@@ -62,7 +60,7 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(load_overloads, MeshLoader::load, 1, 2)
 void exposeMeshLoader() {
   using namespace boost::python;
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<MeshLoader>()) {
+  if (!register_symbolic_link(MeshLoader)) {
     class_<MeshLoader, shared_ptr<MeshLoader> >(
         "MeshLoader", doxygen::class_doc<MeshLoader>(),
         init<optional<NODE_TYPE> >(
@@ -74,7 +72,7 @@ void exposeMeshLoader() {
         .def(dv::member_func("loadOctree", &MeshLoader::loadOctree));
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<CachedMeshLoader>()) {
+  if (!register_symbolic_link(CachedMeshLoader)) {
     class_<CachedMeshLoader, bases<MeshLoader>, shared_ptr<CachedMeshLoader> >(
         "CachedMeshLoader", doxygen::class_doc<MeshLoader>(),
         init<optional<NODE_TYPE> >(

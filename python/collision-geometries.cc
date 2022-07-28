@@ -32,9 +32,6 @@
 //  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 //  POSSIBILITY OF SUCH DAMAGE.
 
-#include <eigenpy/eigenpy.hpp>
-#include <eigenpy/eigen-to-python.hpp>
-
 #include "fcl.hh"
 #include "deprecation.hh"
 
@@ -361,7 +358,7 @@ void exposeCollisionGeometries() {
       .value("BVH_BUILD_STATE_REPLACE_BEGUN", BVH_BUILD_STATE_REPLACE_BEGUN)
       .export_values();
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<OBJECT_TYPE>()) {
+  if (!register_symbolic_link(OBJECT_TYPE)) {
     enum_<OBJECT_TYPE>("OBJECT_TYPE")
         .value("OT_UNKNOWN", OT_UNKNOWN)
         .value("OT_BVH", OT_BVH)
@@ -371,7 +368,7 @@ void exposeCollisionGeometries() {
         .export_values();
   }
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<NODE_TYPE>()) {
+  if (!register_symbolic_link(NODE_TYPE)) {
     enum_<NODE_TYPE>("NODE_TYPE")
         .value("BV_UNKNOWN", BV_UNKNOWN)
         .value("BV_AABB", BV_AABB)
@@ -492,8 +489,7 @@ void exposeCollisionGeometries() {
   def("rotate", (AABB(*)(const AABB&, const Matrix3f&)) & rotate,
       bp::args("aabb", "R"), "Rotate the AABB object by R");
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<
-          CollisionGeometry>()) {
+  if (!register_symbolic_link(CollisionGeometry)) {
     class_<CollisionGeometry, CollisionGeometryPtr_t, noncopyable>(
         "CollisionGeometry", no_init)
         .def("getObjectType", &CollisionGeometry::getObjectType)
@@ -594,7 +590,7 @@ void exposeCollisionGeometries() {
 void exposeCollisionObject() {
   namespace bp = boost::python;
 
-  if (!eigenpy::register_symbolic_link_to_registered_type<CollisionObject>()) {
+  if (!register_symbolic_link(CollisionObject)) {
     class_<CollisionObject, CollisionObjectPtr_t>("CollisionObject", no_init)
         .def(dv::init<CollisionObject, const CollisionGeometryPtr_t&,
                       bp::optional<bool> >())
