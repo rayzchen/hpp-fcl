@@ -28,7 +28,7 @@ jobs:
         key:
           ${{ runner.os }}-conda-${{ matrix.python-version }}-${{ env.CACHE_NUMBER }}-${{
           hashFiles('.github/workflows/conda/conda-env.yml') }}
-    - uses: conda-incubator/setup-miniconda@v1
+    - uses: conda-incubator/setup-miniconda@v2
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
