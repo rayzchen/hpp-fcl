@@ -77,6 +77,7 @@ jobs:
 <<<<<<< HEAD
         cp src\Release\hpp-fcl.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\assimp-vc141-mt.dll out\hppfcl
+        cp %CONDA_PREFIX%\Library\bin\boost_serialization.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\eigenpy.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\qhull_r.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\zlib.dll out\hppfcl
