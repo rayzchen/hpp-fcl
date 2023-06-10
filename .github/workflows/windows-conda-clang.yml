@@ -44,7 +44,6 @@ jobs:
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       run: |
-        %CONDA_PREFIX%\python -V
         :: unset extra Boost envs
         set Boost_ROOT=
         set BOOST_ROOT_1_69_0=
@@ -74,6 +73,8 @@ jobs:
 
         :: Build and Install
         cmake --build . --config Release --target install
+        if errorlevel 1 exit 1
+        
         cp src\Release\hpp-fcl.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\assimp.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\octomap.dll out\hppfcl
@@ -82,12 +83,12 @@ jobs:
         cp %CONDA_PREFIX%\Library\bin\qhull_r.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\zlib.dll out\hppfcl
         python -c "import shutil, os; shutil.copy(os.environ['CONDA_PREFIX'] + '\\Library\\bin\\boost_python' + '${{ matrix.python-version }}'.replace('.', '') + '.dll', 'out\\hppfcl')"
-        if errorlevel 1 exit 1
 
         :: Build stubs
         set PYTHONPATH=out
         git clone https://github.com/jcarpent/pybind11-stubgen.git
         python "%CD%\pybind11-stubgen\pybind11_stubgen\__init__.py" -o out hppfcl --boost-python --ignore-invalid signature --no-setup-py --root-module-suffix ""
+        if errorlevel 1 exit 1
 
         cp -r out\hppfcl %CONDA_PREFIX%\Lib\site-packages
 
