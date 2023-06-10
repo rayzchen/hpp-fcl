@@ -74,7 +74,6 @@ jobs:
 
         :: Build and Install
         cmake --build . --config Release --target install
-<<<<<<< HEAD
         cp src\Release\hpp-fcl.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\assimp-vc141-mt.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\boost_serialization.dll out\hppfcl
