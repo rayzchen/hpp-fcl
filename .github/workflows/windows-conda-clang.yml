@@ -75,7 +75,8 @@ jobs:
         :: Build and Install
         cmake --build . --config Release --target install
         cp src\Release\hpp-fcl.dll out\hppfcl
-        cp %CONDA_PREFIX%\Library\bin\assimp-vc141-mt.dll out\hppfcl
+        cp %CONDA_PREFIX%\Library\bin\assimp.dll out\hppfcl
+        cp %CONDA_PREFIX%\Library\bin\octomap.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\boost_serialization.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\eigenpy.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\qhull_r.dll out\hppfcl
@@ -86,7 +87,7 @@ jobs:
         :: Build stubs
         set PYTHONPATH=out
         git clone https://github.com/jcarpent/pybind11-stubgen.git
-        python "%CD%\pybind11-stubgen\pybind11_stubgen\__init__.py" -o %CONDA_PREFIX%\Lib\site-packages hppfcl --boost-python --ignore-invalid signature --no-setup-py --root-module-suffix ""
+        python "%CD%\pybind11-stubgen\pybind11_stubgen\__init__.py" -o out hppfcl --boost-python --ignore-invalid signature --no-setup-py --root-module-suffix ""
 
         cp -r out\hppfcl %CONDA_PREFIX%\Lib\site-packages
 
