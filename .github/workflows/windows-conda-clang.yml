@@ -78,6 +78,7 @@ jobs:
         cp src\Release\hpp-fcl.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\assimp.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\octomap.dll out\hppfcl
+        cp %CONDA_PREFIX%\Library\bin\octomath.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\boost_serialization.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\eigenpy.dll out\hppfcl
         cp %CONDA_PREFIX%\Library\bin\qhull_r.dll out\hppfcl
